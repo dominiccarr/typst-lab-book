@@ -1,0 +1,305 @@
+name: Cisco IOS
+file_extensions:
+  - cisco
+
+scope: source.cisco
+version: 2
+
+variables:
+
+  # IPv4
+  ipv4: '\b(?:(?:25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\b'
+
+  # IPv6 — intentionally permissive
+  ipv6: '\b[0-9A-Fa-f:]+:[0-9A-Fa-f:]+\b'
+
+  # Cisco interface names
+  interface:
+    '\b(?:
+      GigabitEthernet|
+      TenGigabitEthernet|
+      TwentyFiveGigE|
+      FortyGigabitEthernet|
+      HundredGigE|
+      FastEthernet|
+      Ethernet|
+      Serial|
+      Loopback|
+      Port-channel|
+      Vlan|
+      Tunnel|
+      BDI|
+      Dialer|
+      Cellular|
+      Management|
+      g|
+      f:
+    )[0-9]+(?:/[0-9]+)*(?:\.[0-9]+)?\b'
+
+    
+  # Common IOS configuration commands
+  config_commands:
+    '\b(?:
+      access-class|
+      access-group|
+      access-list|
+      aaa|
+      address-family|
+      archive|
+      arp|
+      bandwidth|
+      banner|
+      boot|
+      channel-group|
+      class-map|
+      clock|
+      default|
+      default-information|
+      default-route|
+      description|
+      duplex|
+      encapsulation|
+      enable|
+      end|
+      exit|
+      hostname|
+      interface|
+      ip|
+      ipv6|
+      key|
+      line|
+      logging|
+      mac-address|
+      maximum-paths|
+      mtu|
+      name|
+      network|
+      no|
+      ntp|
+      password|
+      policy-map|
+      privilege|
+      redistribute|
+      router|
+      route-map|
+      service|
+      snmp-server|
+      spanning-tree|
+      speed|
+      switchport|
+      username|
+      version|
+      vlan|
+      vrf|
+      vrrp|
+      standby|
+      shutdown
+    )\b'
+
+  # Operational/show commands
+  operational_commands:
+    '\b(?:
+      show|
+      clear|
+      debug|
+      undebug|
+      ping|
+      traceroute|
+      telnet|
+      ssh|
+      copy|
+      write|
+      reload|
+      erase|
+      delete|
+      dir|
+      terminal|
+      configure|
+      connect|
+      enable|
+      disable
+    )\b'
+
+  # Routing protocols
+  routing_protocols:
+    '\b(?:
+      ospf|
+      ospfv3|
+      eigrp|
+      bgp|
+      rip|
+      ripng|
+      isis
+    )\b'
+
+  # Common L2/L3 keywords
+  keywords:
+    '\b(?:
+      permit|
+      deny|
+      host|
+      any|
+      eq|
+      gt|
+      lt|
+      range|
+      established|
+      log|
+      log-input|
+      passive-interface|
+      area|
+      metric|
+      cost|
+      priority|
+      authentication|
+      version|
+      router-id|
+      passive|
+      unicast|
+      multicast|
+      broadcast|
+      trunk|
+      access|
+      native|
+      allowed|
+      encapsulation|
+      dot1q|
+      mode|
+      dynamic|
+      desirable|
+      active|
+      auto|
+      on
+    )\b'
+
+contexts:
+
+  main:
+
+    # ─────────────────────────────────────
+    # Cisco comments
+    # ─────────────────────────────────────
+
+    - match: '^\s*!.*$'
+      scope: comment.line.cisco-ios
+
+    # ─────────────────────────────────────
+    # Cisco prompts
+    #
+    # Router#
+    # Router(config)#
+    # Router(config-if)#
+    # Switch(config-vlan)#
+    # ─────────────────────────────────────
+
+    - match: '^(\s*)([\w.-]+(?:\([^)]+\))?#)'
+      captures:
+        1: punctuation.whitespace.cisco-ios
+        2: entity.name.tag.prompt.cisco-ios
+
+    # ─────────────────────────────────────
+    # Quoted strings
+    # ─────────────────────────────────────
+
+    - match: '"'
+      scope: punctuation.definition.string.begin.cisco-ios
+      push: double-string
+
+    - match: "'"
+      scope: punctuation.definition.string.begin.cisco-ios
+      push: single-string
+
+    # ─────────────────────────────────────
+    # IPv4 addresses
+    # ─────────────────────────────────────
+
+    - match: '{{ipv4}}'
+      scope: constant.numeric.ipv4.cisco-ios
+
+    # ─────────────────────────────────────
+    # IPv6 addresses
+    # ─────────────────────────────────────
+
+    - match: '{{ipv6}}'
+      scope: constant.numeric.ipv6.cisco-ios
+
+    # ─────────────────────────────────────
+    # Interfaces
+    # ─────────────────────────────────────
+
+    - match: '{{interface}}'
+      scope: entity.name.type.interface.cisco-ios
+
+    # ─────────────────────────────────────
+    # Routing protocols
+    # ─────────────────────────────────────
+
+    - match: '{{routing_protocols}}'
+      scope: entity.name.type.protocol.cisco-ios
+
+    # ─────────────────────────────────────
+    # Operational commands
+    # ─────────────────────────────────────
+
+    - match: '{{operational_commands}}'
+      scope: keyword.control.operational.cisco-ios
+
+    # ─────────────────────────────────────
+    # Configuration commands
+    # ─────────────────────────────────────
+
+    - match: '{{config_commands}}'
+      scope: keyword.control.configuration.cisco-ios
+
+    # ─────────────────────────────────────
+    # IOS keywords
+    # ─────────────────────────────────────
+
+    - match: '{{keywords}}'
+      scope: keyword.other.cisco-ios
+
+    # ─────────────────────────────────────
+    # Numbers
+    # ─────────────────────────────────────
+
+    - match: '\b\d+\b'
+      scope: constant.numeric.cisco-ios
+
+    # ─────────────────────────────────────
+    # Variables / identifiers
+    # ─────────────────────────────────────
+
+    - match: '\b[A-Za-z][A-Za-z0-9_.-]*\b'
+      scope: variable.other.cisco-ios
+
+
+  # ─────────────────────────────────────────
+  # Double quoted string
+  # ─────────────────────────────────────────
+
+  double-string:
+
+    - meta_scope: string.quoted.double.cisco-ios
+
+    - match: '\\.'
+      scope: constant.character.escape.cisco-ios
+
+    - match: '"'
+      scope: punctuation.definition.string.end.cisco-ios
+      pop: true
+
+
+  # ─────────────────────────────────────────
+  # Single quoted string
+  # ─────────────────────────────────────────
+
+  single-string:
+
+    - meta_scope: string.quoted.single.cisco-ios
+
+    - match: '\\.'
+      scope: constant.character.escape.cisco-ios
+
+    - match: "'"
+      scope: punctuation.definition.string.end.cisco-ios
+      pop: true

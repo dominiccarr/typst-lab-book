@@ -61,4 +61,17 @@
 
 + You can now ping from PC1 to PC2
 
+
+```cisco
+! Configure the WAN interface
+Router# configure terminal
+Router(config)# interface g0/0
+Router(config-if)# description WAN uplink
+Router(config-if)# ip address 192.168.1.1 255.255.255.252
+Router(config-if)# no shutdown
+Router(config-if)# exit
+Router(config)# end
+Router# show ip interface brief
+```
+
 ]

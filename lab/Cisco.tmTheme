@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>name</key>
+  <string>Cisco IOS</string>
+
+  <key>settings</key>
+  <array>
+
+    <dict>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#D4D4D4</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Cisco Prompt</string>
+      <key>scope</key>
+      <string>entity.name.tag.prompt.cisco-ios</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#F59E0B</string>
+        <key>fontStyle</key>
+        <string>bold</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Cisco Command</string>
+      <key>scope</key>
+      <string>keyword.control.configuration.cisco-ios</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#569CD6</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Cisco Interface</string>
+      <key>scope</key>
+      <string>entity.name.type.interface.cisco-ios</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#4EC9B0</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Cisco IP Address</string>
+      <key>scope</key>
+      <string>constant.numeric.ipv4.cisco-ios</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#4F9D69</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>
+      <string>Cisco Comment</string>
+      <key>scope</key>
+      <string>comment.line.cisco-ios</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#6A9955</string>
+      </dict>
+    </dict>
+
+  </array>
+</dict>
+</plist>

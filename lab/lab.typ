@@ -239,6 +239,11 @@
     #it
   ]
 
+  #set raw(
+    lang:"cisco",
+  syntaxes: "Cisco.sublime-syntax",
+  theme: "Cisco.tmTheme"
+)
 
   #show raw.where(block: false): it => box(
     fill: luma(245),
@@ -452,6 +457,11 @@
   // Table of contents
   // ----------------------------------------------------------
 
+
+  #show heading.where(supplement: [HERE]): it => {
+  box(width: 0pt, height: 0pt)
+}
+
   #show outline.entry: it => link(
     it.element.location(),
 
@@ -481,6 +491,8 @@
       paper-colour
     } else if heading.supplement == [EP] {
       other-colour
+    } else if heading.supplement == [HERE] {
+      rgb("#C62828")
     } else {
       pt-colour
     }
